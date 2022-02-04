@@ -1,6 +1,5 @@
 import { Cluster } from "@solana/web3.js";
-import bs58 from "bs58";
-import { Keypair } from "@solana/web3.js";
+
 
 require('dotenv').config()
 
@@ -8,21 +7,17 @@ require('dotenv').config()
 export const ENV: Cluster = (process.env.cluster as Cluster) || "mainnet-beta";
 export const SOLANA_RPC_ENDPOINT = ENV === "devnet"
     ? 'https://api.devnet.solana.com'
-    : "https://solana-api.projectserum.com";
+    : "https://ssc-dao.genesysgo.net";
 
 // Wallets
-export const WALLET_PRIVATE_KEY = process.env.WALLET_PRIVATE_KEY || "PASTE YOUR WALLET PRIVATE KEY";
-export const USER_PRIVATE_KEY = bs58.decode(WALLET_PRIVATE_KEY);
-export const USER_KEYPAIR = Keypair.fromSecretKey(USER_PRIVATE_KEY);
+export const USER_KEYPAIR_PATH = process.env.USER_KEYPAIR_PATH || "PASTE YOUR WALLET PRIVATE KEY";
 
 // Token Mints
-export const INPUT_MINT_ADDRESS =
-    ENV === "devnet"
-        ? "So11111111111111111111111111111111111111112" // SOL
-        : "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"; // USDC
-export const OUTPUT_MINT_ADDRESS = ENV === "devnet"
-    ? "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt" // SRM
-    : "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"; // USDT
+export const INPUT_MINT_ADDRESS = process.env.INPUT_MINT_ADDRESS || "So11111111111111111111111111111111111111112"; // SOL
+export const OUTPUT_MINT_ADDRESS = process.env.OUTPUT_MINT_ADDRESS || "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"; // USDT
+
+// Jupiter CACHE_DURATION_MS
+export const CACHE_DURATION_MS = 1000
 
 // Interface
 export interface Token {
