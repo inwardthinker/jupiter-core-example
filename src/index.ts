@@ -216,7 +216,7 @@ const main = async () => {
                 if (ratio > 0.99) {
                   console.log(`Executing USDC to USDH--usdc amount: ${routeInfos[0].inAmount}--usdh amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
-                  await new Promise(f => setTimeout(f, 4000));
+                  await new Promise(f => setTimeout(f, 5000));
                 }
               }
             }
@@ -238,7 +238,7 @@ const main = async () => {
                 if (ratio > 1.03) {
                   console.log(`Executing USDH to USDC--usdh amount: ${routeInfos[0].inAmount}--usdc amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
-                  await new Promise(f => setTimeout(f, 4000));
+                  await new Promise(f => setTimeout(f, 5000));
                 }
               }
             }
@@ -246,7 +246,7 @@ const main = async () => {
         }
       }
 
-      await new Promise(f => setTimeout(f, 2000)); // sleep for 2 seconds
+      await new Promise(f => setTimeout(f, 5000)); // sleep for 2 seconds
     }
   } catch (error) {
     console.log({ error });
