@@ -220,7 +220,7 @@ const main = async () => {
               }
             }
           }
-          else if (ratio < 0.97 && usdh_amount >= 1000) {
+          else if (ratio < 0.975 && usdh_amount >= 1000) {
             const usdh_to_usdc  = await getRoutes({
               jupiter,
               outputToken,
@@ -233,7 +233,7 @@ const main = async () => {
               if (routeInfos.length > 0) {
                 const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount
                 console.log(`USDH to USDC ratio: ${ratio}`)
-                if (ratio > 1.03) {
+                if (ratio > 1.025) {
                   console.log(`Executing USDH to USDC--usdh amount: ${routeInfos[0].inAmount}--usdc amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
                 }
