@@ -17,7 +17,7 @@ export const INPUT_MINT_ADDRESS = process.env.INPUT_MINT_ADDRESS || "So111111111
 export const OUTPUT_MINT_ADDRESS = process.env.OUTPUT_MINT_ADDRESS || "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB"; // USDT
 
 // Jupiter CACHE_DURATION_MS
-export const CACHE_DURATION_MS = 4000
+export const CACHE_DURATION_MS = 29000
 
 // Interface
 export interface Token {

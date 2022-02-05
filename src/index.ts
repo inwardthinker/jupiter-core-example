@@ -200,7 +200,7 @@ const main = async () => {
         if (routeInfos.length > 0) {
           const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount;
           console.log(`USDC to USDH ratio: ${ratio}`)
-          if (ratio > 0.983 && usdc_amount >= 1000) {
+          if (ratio > 0.995 && usdc_amount >= 1000) {
             const usdc_to_usdh  = await getRoutes({
               jupiter,
               inputToken: usdcToken,
@@ -213,15 +213,14 @@ const main = async () => {
               if (routeInfos.length > 0) {
                 const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount
                 console.log(`USDC to USDH ratio: ${ratio}`)
-                if (ratio > 0.983) {
+                if (ratio > 0.995) {
                   console.log(`Executing USDC to USDH--usdc amount: ${routeInfos[0].inAmount}--usdh amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
-                  await new Promise(f => setTimeout(f, 5000));
                 }
               }
             }
           }
-          else if (ratio < 0.97 && usdh_amount >= 1000) {
+          else if (ratio < 0.98 && usdh_amount >= 1000) {
 
             const usdh_to_usdc  = await getRoutes({
               jupiter,
@@ -235,10 +234,9 @@ const main = async () => {
               if (routeInfos.length > 0) {
                 const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount
                 console.log(`USDH to USDC ratio: ${ratio}`)
-                if (ratio > 1.03) {
+                if (ratio > 1.02) {
                   console.log(`Executing USDH to USDC--usdh amount: ${routeInfos[0].inAmount}--usdc amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
-                  await new Promise(f => setTimeout(f, 5000));
                 }
               }
             }
@@ -246,7 +244,7 @@ const main = async () => {
         }
       }
 
-      await new Promise(f => setTimeout(f, 5000)); // sleep for 2 seconds
+      await new Promise(f => setTimeout(f, 30000)); // sleep for 30 seconds
     }
   } catch (error) {
     console.log({ error });
