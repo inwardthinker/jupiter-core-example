@@ -1,7 +1,6 @@
 import { Connection, PublicKey, Keypair } from "@solana/web3.js";
 import fetch from "isomorphic-fetch";
 import { fs } from "mz";
-const axios = require('axios');
 
 import { Jupiter, RouteInfo, TOKEN_LIST_URL } from "@jup-ag/core";
 import {

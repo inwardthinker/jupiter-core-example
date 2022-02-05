@@ -6,7 +6,7 @@ require('dotenv').config()
 // Endpoints, connection
 export const ENV: Cluster = (process.env.cluster as Cluster) || "mainnet-beta";
 export const SOLANA_RPC_ENDPOINT = ENV === "devnet"
-    ? 'https://api.devnet.solana.com'
+    ? 'https://solana-api.projectserum.com'
     : "https://ssc-dao.genesysgo.net";
 
 // Wallets
