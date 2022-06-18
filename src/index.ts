@@ -152,8 +152,8 @@ const main = async () => {
     // Get USDH and USDC token account balance for this account
 
     // If you know which input/output pair you want
-    const usdcToken = tokens.find((t) => t.address == INPUT_MINT_ADDRESS); // USDH Mint Info
-    const usdhToken = tokens.find((t) => t.address == OUTPUT_MINT_ADDRESS); // USDC Mint Info
+    const usdcToken = tokens.find((t) => t.address == INPUT_MINT_ADDRESS); // USDC Mint Info
+    const ushToken = tokens.find((t) => t.address == OUTPUT_MINT_ADDRESS); // USDH Mint Info
     // Alternatively, find all possible outputToken based on your inputToken
     while(true) {
       console.log("Compute input and output token balances");
@@ -170,7 +170,7 @@ const main = async () => {
           }
           else return 0
         });
-      const usdh_amount = await connection
+      const ush_amount = await connection
         .getParsedTokenAccountsByOwner(
           new PublicKey(user_keypair.publicKey.toBase58()),
           {
@@ -183,15 +183,15 @@ const main = async () => {
           }
           else return 0
         });
-      console.log(`USDC Balance: ${usdc_amount}--USDH Balance: ${usdh_amount}`);
+      console.log(`USDC Balance: ${usdc_amount}--USH Balance: ${ush_amount}`);
       
-      console.log(`Get routes for input: ${usdcToken?.symbol} and output: ${usdhToken?.symbol} token pairs`);
+      console.log(`Get routes for input: ${usdcToken?.symbol} and output: ${ushToken?.symbol} token pairs`);
       const routes = await getRoutes({
         jupiter,
         inputToken: usdcToken,
-        outputToken: usdhToken,
-        inputAmount: 1000, // 1000 unit in UI
-        slippage: 1, // 1% slippage
+        outputToken: ushToken,
+        inputAmount: 29900, // 29900 unit in UI
+        slippage: 0.5, // 0.5% slippage
       });
 
       if (routes) {
@@ -199,42 +199,41 @@ const main = async () => {
         if (routeInfos.length > 0) {
           const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount;
           console.log(`USDC to USDH ratio: ${ratio}`)
-          if (ratio > 0.995 && usdc_amount >= 1000) {
+          if (ratio > 991 && usdc_amount >= 29900) {
             const usdc_to_usdh  = await getRoutes({
               jupiter,
               inputToken: usdcToken,
-              outputToken: usdhToken,
-              inputAmount: 1000, // 1000 unit in UI
-              slippage: 1, // 1% slippage
+              outputToken: ushToken,
+              inputAmount: 29900, // 29900 unit in UI
+              slippage: 0.5, // 1% slippage
             });
             if (usdc_to_usdh) {
               const routeInfos = usdc_to_usdh.routesInfos
               if (routeInfos.length > 0) {
                 const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount
-                console.log(`USDC to USDH ratio: ${ratio}`)
-                if (ratio > 0.995) {
-                  console.log(`Executing USDC to USDH--usdc amount: ${routeInfos[0].inAmount}--usdh amount: ${routeInfos[0].outAmount}`);
+                console.log(`USDC to USH ratio: ${ratio}`)
+                if (ratio > 991) {
+                  console.log(`Executing USDC to USH--usdc amount: ${routeInfos[0].inAmount}--usdh amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
                 }
               }
             }
           }
-          else if (ratio < 0.98 && usdh_amount >= 1000) {
-
-            const usdh_to_usdc  = await getRoutes({
+          else if (ratio < 983 && ush_amount >= 29000) {
+            const ush_to_usdc  = await getRoutes({
               jupiter,
-              inputToken: usdhToken,
+              inputToken: ushToken,
               outputToken: usdcToken,
-              inputAmount: 1000, // 1000 unit in UI
-              slippage: 1, // 1% slippage
+              inputAmount: 29000, // 29000 unit in UI
+              slippage: 0.5, // 1% slippage
             });
-            if (usdh_to_usdc) {
-              const routeInfos = usdh_to_usdc.routesInfos
+            if (ush_to_usdc) {
+              const routeInfos = ush_to_usdc.routesInfos
               if (routeInfos.length > 0) {
                 const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount
-                console.log(`USDH to USDC ratio: ${ratio}`)
-                if (ratio > 1.02) {
-                  console.log(`Executing USDH to USDC--usdh amount: ${routeInfos[0].inAmount}--usdc amount: ${routeInfos[0].outAmount}`);
+                console.log(`USH to USDC ratio: ${ratio}`)
+                if (ratio > 1017) {
+                  console.log(`Executing USH to USDC--ush amount: ${routeInfos[0].inAmount}--usddc amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
                 }
               }
@@ -242,8 +241,7 @@ const main = async () => {
           }
         }
       }
-
-      await new Promise(f => setTimeout(f, 30000)); // sleep for 30 seconds
+      await new Promise(f => setTimeout(f, 60000)); // sleep for 60 seconds
     }
   } catch (error) {
     console.log({ error });
