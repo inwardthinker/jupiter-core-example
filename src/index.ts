@@ -155,6 +155,7 @@ const main = async () => {
     const usdcToken = tokens.find((t) => t.address == INPUT_MINT_ADDRESS); // USDC Mint Info
     const ushToken = tokens.find((t) => t.address == OUTPUT_MINT_ADDRESS); // USDH Mint Info
     // Alternatively, find all possible outputToken based on your inputToken
+
     while(true) {
       console.log("Compute input and output token balances");
       const usdc_amount = await connection
@@ -199,12 +200,12 @@ const main = async () => {
         if (routeInfos.length > 0) {
           const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount;
           console.log(`USDC to USDH ratio: ${ratio}`)
-          if (ratio > 990 && usdc_amount >= 27900) {
+          if (ratio > 985 && usdc_amount >= 27000) {
             const usdc_to_usdh  = await getRoutes({
               jupiter,
               inputToken: usdcToken,
               outputToken: ushToken,
-              inputAmount: 27900, // 29900 unit in UI
+              inputAmount: 27000, // 29900 unit in UI
               slippage: 0.5, // 1% slippage
             });
             if (usdc_to_usdh) {
@@ -212,19 +213,19 @@ const main = async () => {
               if (routeInfos.length > 0) {
                 const ratio = routeInfos[0].outAmount / routeInfos[0].inAmount
                 console.log(`USDC to USH ratio: ${ratio}`)
-                if (ratio > 990) {
+                if (ratio > 985) {
                   console.log(`Executing USDC to USH--usdc amount: ${routeInfos[0].inAmount}--usdh amount: ${routeInfos[0].outAmount}`);
                   await executeSwap({ jupiter, route: routeInfos[0] });
                 }
               }
             }
           }
-          else if (ratio < 975 && ush_amount >= 27000) {
+          else if (ratio < 975 && ush_amount >= 26000) {
             const ush_to_usdc  = await getRoutes({
               jupiter,
               inputToken: ushToken,
               outputToken: usdcToken,
-              inputAmount: 27000, // 27000 unit in UI
+              inputAmount: 26000, // 27000 unit in UI
               slippage: 0.5, // 1% slippage
             });
             if (ush_to_usdc) {
